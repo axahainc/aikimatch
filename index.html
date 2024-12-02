@@ -49,33 +49,33 @@
       color: #6d4c41;
     }
 
-    /* Card styles with enhanced hover and click effects */
+    /* Card styles with background color change on hover */
     .section-card {
       background-color: #fff;
       border: 1px solid #6d4c41;
       border-radius: 8px;
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       padding: 20px;
       text-align: center;
       transition: all 0.3s ease;
     }
 
     .section-card:hover {
-      transform: scale(2.2); /* Increased hover effect */
+      transform: scale(1.1); /* Increased hover effect */
       box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
-      color: #3e2723; /* Dark coffee on hover */
+      background-color: #d7ccc8; /* Change background color to light coffee on hover */
     }
 
     .section-card:active {
       transform: scale(1.05); /* Slight shrink when clicked */
-      background-color: #d7ccc8; /* Light coffee color on click */
-      color: #3e2723; /* Dark coffee text */
+      background-color: #8d6e63; /* Darker coffee color on click */
+      color: white; /* Keep text white on click */
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); /* Strong box-shadow on click */
     }
 
-    .section-card:hover h8,
+    .section-card:hover h5,
     .section-card:hover p,
-    .section-card:active h8,
+    .section-card:active h5,
     .section-card:active p {
       color: #3e2723; /* Dark coffee text */
     }
@@ -94,7 +94,7 @@
     }
 
     .floating-button:hover {
-      transform: translateY(-7px);
+      transform: translateY(-10px);
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     }
 
