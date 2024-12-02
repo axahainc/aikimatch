@@ -54,21 +54,20 @@
       border: 1px solid #6d4c41;
       border-radius: 8px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
       padding: 20px;
       text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
     }
 
-    /* Hover Effect: Apply on mouseover */
     .section-card:hover {
       transform: scale(1.05);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       color: #3e2723; /* Dark coffee on hover */
     }
 
-    .section-card h5:hover,
-    .section-card p:hover {
-      color: #3e2723; /* Dark coffee text on hover */
+    .section-card:hover h5,
+    .section-card:hover p {
+      color: #3e2723; /* Dark coffee text */
     }
 
     .floating-button {
@@ -217,4 +216,21 @@
         <div class="card section-card shadow">
           <div class="card-body">
             <h5 class="card-title">Transparent Service</h5>
-            <p class="card-text">Our platform
+            <p class="card-text">Our platform ensures clear pricing and feedback, so you know what to expect.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center">
+    <p>&copy; 2024 AikiMatch. All rights reserved.</p>
+  </footer>
+
+  <!-- Bootstrap 5 and JS Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/5.1.0/js/mdb.min.js"></script>
+</body>
+</html>
