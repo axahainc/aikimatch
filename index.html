@@ -49,7 +49,7 @@
       color: #6d4c41;
     }
 
-    /* Card styles with hover effect */
+    /* Card styles with enhanced hover and click effects */
     .section-card {
       background-color: #fff;
       border: 1px solid #6d4c41;
@@ -61,13 +61,22 @@
     }
 
     .section-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      transform: scale(1.1); /* Increased hover effect */
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
       color: #3e2723; /* Dark coffee on hover */
     }
 
+    .section-card:active {
+      transform: scale(1.05); /* Slight shrink when clicked */
+      background-color: #d7ccc8; /* Light coffee color on click */
+      color: #3e2723; /* Dark coffee text */
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); /* Strong box-shadow on click */
+    }
+
     .section-card:hover h5,
-    .section-card:hover p {
+    .section-card:hover p,
+    .section-card:active h5,
+    .section-card:active p {
       color: #3e2723; /* Dark coffee text */
     }
 
@@ -207,16 +216,16 @@
       <div class="col-md-4">
         <div class="card section-card shadow">
           <div class="card-body">
-            <h5 class="card-title">Connect Easily</h5>
-            <p class="card-text">Chat directly with professionals and negotiate your job terms, all in one place.</p>
+            <h5 class="card-title">Job Search</h5>
+            <p class="card-text">Search for available job opportunities based on your skills and preferences.</p>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card section-card shadow">
           <div class="card-body">
-            <h5 class="card-title">Transparent Service</h5>
-            <p class="card-text">Our platform ensures clear pricing and feedback, so you know what to expect.</p>
+            <h5 class="card-title">Post Jobs</h5>
+            <p class="card-text">Easily post job opportunities for individuals to apply based on their skill set.</p>
           </div>
         </div>
       </div>
