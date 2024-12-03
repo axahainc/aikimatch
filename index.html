@@ -1,245 +1,184 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AikiMatch - Connect with Professionals</title>
-  <!-- Material Design for Bootstrap 5 CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/5.1.0/css/mdb.min.css" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f4f1f0;
-    }
+import React, { useState } from 'react';
+import { 
+  Search, 
+  MapPin, 
+  Star, 
+  User, 
+  MessageCircle, 
+  Award, 
+  Home, 
+  Bell, 
+  Settings 
+} from 'lucide-react';
 
-    .hero-section {
-      background: url('https://via.placeholder.com/1200x500/8B4513/ffffff?text=AikiMatch') no-repeat center center;
-      background-size: cover;
-      color: white;
-      padding: 60px 0;
-      position: relative;
-    }
+const ProfessionalMarketplaceApp = () => {
+  const [filters, setFilters] = useState({
+    skillType: '',
+    minRating: 0,
+    location: ''
+  });
 
-    .navbar {
-      background-color: #3e2723;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 10;
+  const professionals = [
+    {
+      id: 1,
+      name: "Sarah Martinez",
+      profession: "Graphic Designer",
+      skills: ["Branding", "UI/UX", "Adobe Creative Suite"],
+      location: "San Francisco, CA",
+      rating: 4.9,
+      certifications: ["Adobe Certified Expert"],
+      hourlyRate: 75,
+      availability: "Flexible"
+    },
+    {
+      id: 2,
+      name: "Alex Chen",
+      profession: "Web Developer",
+      skills: ["React", "Node.js", "Full Stack Development"],
+      location: "New York, NY", 
+      rating: 4.7,
+      certifications: ["AWS Certified Developer"],
+      hourlyRate: 95,
+      availability: "Part-time"
     }
+  ];
 
-    .navbar-brand {
-      font-weight: bold;
-      color: #fff;
-    }
+  const filteredProfessionals = professionals.filter(pro => 
+    (!filters.skillType || pro.skills.includes(filters.skillType)) &&
+    (!filters.minRating || pro.rating >= filters.minRating)
+  );
 
-    .navbar-dark .navbar-nav .nav-link {
-      color: #d7ccc8;
-    }
+  return (
+    <div className="flex flex-col h-screen bg-gray-100 max-w-md mx-auto shadow-lg">
+      {/* Header */}
+      <header className="bg-blue-600 text-white p-4 flex justify-between items-center">
+        <div className="flex items-center">
+          <img 
+            src="/api/placeholder/40/40" 
+            alt="Logo" 
+            className="w-10 h-10 rounded-full mr-3"
+          />
+          <h1 className="text-xl font-bold">ProConnect</h1>
+        </div>
+        <div className="flex space-x-3">
+          <Bell />
+          <Settings />
+        </div>
+      </header>
 
-    .navbar-dark .navbar-nav .nav-link:hover {
-      color: #fff;
-    }
-
-    .section-title {
-      font-size: 2.5rem;
-      font-weight: 600;
-      margin-bottom: 30px;
-      color: #6d4c41;
-    }
-
-    /* Card styles with background color change on hover */
-    .section-card {
-      background-color: #fff;
-      border: 1px solid #6d4c41;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .section-card:hover {
-      transform: scale(1.1); /* Increased hover effect */
-      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
-      background-color: #d7ccc8; /* Change background color to light coffee on hover */
-    }
-
-    .section-card:active {
-      transform: scale(1.05); /* Slight shrink when clicked */
-      background-color: #8d6e63; /* Darker coffee color on click */
-      color: white; /* Keep text white on click */
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); /* Strong box-shadow on click */
-    }
-
-    .section-card:hover h5,
-    .section-card:hover p,
-    .section-card:active h5,
-    .section-card:active p {
-      color: #3e2723; /* Dark coffee text */
-    }
-
-    .floating-button {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      background-color: #6d4c41;
-      color: white;
-      border-radius: 50%;
-      padding: 20px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-      transform: translateY(0);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .floating-button:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    footer {
-      background-color: #3e2723;
-      color: white;
-      padding: 20px;
-    }
-
-    /* Sliding Marquee Announcement */
-    .announcement {
-      background-color: #8d6e63;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      position: fixed;
-      top: 100px;
-      left: 0;
-      width: 100%;
-      z-index: 999;
-      font-size: 16px;
-    }
-
-    .search-bar {
-      margin-top: 150px;
-      width: 60%;
-      margin-left: auto;
-      margin-right: auto;
-      display: flex;
-      justify-content: center;
-    }
-
-    .carousel-inner img {
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
-    }
-  </style>
-</head>
-<body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">AikiMatch</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="login.html">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="signup.html">Sign Up</a>
-          </li>
-        </ul>
+      {/* Banner */}
+      <div className="bg-blue-500 text-white p-4 text-center">
+        <h2 className="text-lg font-semibold">Find Your Perfect Professional</h2>
+        <p className="text-sm">Connect with top-rated experts across various domains</p>
       </div>
-    </div>
-  </nav>
 
-  <!-- Marquee Announcement -->
-  <div class="announcement">
-    <marquee>🚀 New Features Coming Soon! Stay Tuned for More Updates.</marquee>
-  </div>
+      {/* Search & Filters */}
+      <div className="p-4 bg-white">
+        <div className="flex items-center bg-gray-100 rounded-lg p-2 mb-3">
+          <Search className="text-gray-500 mr-2" />
+          <input 
+            type="text" 
+            placeholder="Search skills" 
+            className="w-full bg-transparent"
+            onChange={(e) => setFilters({...filters, skillType: e.target.value})}
+          />
+        </div>
 
-  <!-- Hero Section -->
-  <header class="hero-section text-center">
-    <div class="container">
-      <h1 class="display-4" style="animation: fadeIn 2s;">Find the Right Talent for Your Job</h1>
-      <p class="lead" style="animation: fadeIn 3s;">Connecting skilled professionals with clients, simplifying the job search process.</p>
-      <a href="signup.html" class="btn btn-lg" style="background-color: #6d4c41; color: white;">Get Started</a>
-    </div>
-  </header>
-
-  <!-- Search Bar Section -->
-  <div class="search-bar">
-    <input type="text" class="form-control form-control-lg" placeholder="Search for professionals, services, or jobs..." style="border-color: #6d4c41;" />
-    <button class="btn btn-lg" style="background-color: #6d4c41; color: white;">Search</button>
-  </div>
-
-  <!-- Gallery Slider -->
-  <div id="carouselExample" class="carousel slide mt-5">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="https://via.placeholder.com/1200x400/8B4513/ffffff?text=Gallery+Image+1" class="d-block w-100" alt="Gallery Image 1">
-      </div>
-      <div class="carousel-item">
-        <img src="https://via.placeholder.com/1200x400/8B4513/ffffff?text=Gallery+Image+2" class="d-block w-100" alt="Gallery Image 2">
-      </div>
-      <div class="carousel-item">
-        <img src="https://via.placeholder.com/1200x400/8B4513/ffffff?text=Gallery+Image+3" class="d-block w-100" alt="Gallery Image 3">
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-
-  <!-- Features Section -->
-  <section class="container py-5">
-    <h2 class="section-title text-center">Our Features</h2>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="card section-card shadow">
-          <div class="card-body">
-            <h5 class="card-title">Find Professionals</h5>
-            <p class="card-text">Browse through a wide range of skilled professionals for your project or service needs.</p>
+        <div className="flex space-x-2">
+          <div className="flex-1">
+            <select 
+              className="w-full bg-gray-100 p-2 rounded-lg"
+              onChange={(e) => setFilters({...filters, location: e.target.value})}
+            >
+              <option>Location</option>
+              <option>San Francisco</option>
+              <option>New York</option>
+            </select>
+          </div>
+          <div className="flex-1">
+            <select 
+              className="w-full bg-gray-100 p-2 rounded-lg"
+              onChange={(e) => setFilters({...filters, minRating: parseFloat(e.target.value)})}
+            >
+              <option value={0}>Ratings</option>
+              <option value={4}>4+ Stars</option>
+              <option value={4.5}>4.5+ Stars</option>
+            </select>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card section-card shadow">
-          <div class="card-body">
-            <h5 class="card-title">Job Search</h5>
-            <p class="card-text">Search for available job opportunities based on your skills and preferences.</p>
+
+      {/* Professional Listings */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {filteredProfessionals.map(pro => (
+          <div 
+            key={pro.id} 
+            className="bg-white rounded-lg shadow-md p-4"
+          >
+            <div className="flex justify-between items-center mb-3">
+              <div className="flex items-center">
+                <img 
+                  src="/api/placeholder/40/40" 
+                  alt={pro.name} 
+                  className="w-10 h-10 rounded-full mr-3"
+                />
+                <div>
+                  <h3 className="font-bold">{pro.name}</h3>
+                  <p className="text-sm text-gray-500">{pro.profession}</p>
+                </div>
+              </div>
+              <div className="flex items-center text-yellow-500">
+                <Star className="mr-1" size={16} /> {pro.rating}
+              </div>
+            </div>
+
+            <div className="mb-3">
+              <div className="flex flex-wrap gap-2">
+                {pro.skills.map(skill => (
+                  <span 
+                    key={skill} 
+                    className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <div>
+                <p className="font-bold text-green-600">${pro.hourlyRate}/hr</p>
+                <p className="text-gray-500 text-sm">Available: {pro.availability}</p>
+              </div>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center">
+                <MessageCircle className="mr-2" size={16} /> Contact
+              </button>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
-      <div class="col-md-4">
-        <div class="card section-card shadow">
-          <div class="card-body">
-            <h5 class="card-title">Post Jobs</h5>
-            <p class="card-text">Easily post job opportunities for individuals to apply based on their skill set.</p>
-          </div>
-        </div>
-      </div>
+
+      {/* Bottom Navigation */}
+      <footer className="bg-white border-t border-gray-200 p-3 flex justify-around">
+        <button className="flex flex-col items-center text-blue-600">
+          <Home />
+          <span className="text-xs mt-1">Home</span>
+        </button>
+        <button className="flex flex-col items-center text-gray-500">
+          <Search />
+          <span className="text-xs mt-1">Search</span>
+        </button>
+        <button className="flex flex-col items-center text-gray-500">
+          <MessageCircle />
+          <span className="text-xs mt-1">Messages</span>
+        </button>
+        <button className="flex flex-col items-center text-gray-500">
+          <User />
+          <span className="text-xs mt-1">Profile</span>
+        </button>
+      </footer>
     </div>
-  </section>
+  );
+};
 
-  <!-- Footer -->
-  <footer class="text-center">
-    <p>&copy; 2024 AikiMatch. All rights reserved.</p>
-  </footer>
-
-  <!-- Bootstrap 5 and JS Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/5.1.0/js/mdb.min.js"></script>
-</body>
-</html>
+export default ProfessionalMarketplaceApp;
