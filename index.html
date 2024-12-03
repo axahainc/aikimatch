@@ -1,184 +1,261 @@
-import React, { useState } from 'react';
-import { 
-  Search, 
-  MapPin, 
-  Star, 
-  User, 
-  MessageCircle, 
-  Award, 
-  Home, 
-  Bell, 
-  Settings 
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProConnect - Professional Services</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --background-light: #f3f4f6;
+            --text-dark: #1f2937;
+        }
 
-const ProfessionalMarketplaceApp = () => {
-  const [filters, setFilters] = useState({
-    skillType: '',
-    minRating: 0,
-    location: ''
-  });
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  const professionals = [
-    {
-      id: 1,
-      name: "Sarah Martinez",
-      profession: "Graphic Designer",
-      skills: ["Branding", "UI/UX", "Adobe Creative Suite"],
-      location: "San Francisco, CA",
-      rating: 4.9,
-      certifications: ["Adobe Certified Expert"],
-      hourlyRate: 75,
-      availability: "Flexible"
-    },
-    {
-      id: 2,
-      name: "Alex Chen",
-      profession: "Web Developer",
-      skills: ["React", "Node.js", "Full Stack Development"],
-      location: "New York, NY", 
-      rating: 4.7,
-      certifications: ["AWS Certified Developer"],
-      hourlyRate: 95,
-      availability: "Part-time"
-    }
-  ];
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
 
-  const filteredProfessionals = professionals.filter(pro => 
-    (!filters.skillType || pro.skills.includes(filters.skillType)) &&
-    (!filters.minRating || pro.rating >= filters.minRating)
-  );
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
 
-  return (
-    <div className="flex flex-col h-screen bg-gray-100 max-w-md mx-auto shadow-lg">
-      {/* Header */}
-      <header className="bg-blue-600 text-white p-4 flex justify-between items-center">
-        <div className="flex items-center">
-          <img 
-            src="/api/placeholder/40/40" 
-            alt="Logo" 
-            className="w-10 h-10 rounded-full mr-3"
-          />
-          <h1 className="text-xl font-bold">ProConnect</h1>
-        </div>
-        <div className="flex space-x-3">
-          <Bell />
-          <Settings />
-        </div>
-      </header>
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-      {/* Banner */}
-      <div className="bg-blue-500 text-white p-4 text-center">
-        <h2 className="text-lg font-semibold">Find Your Perfect Professional</h2>
-        <p className="text-sm">Connect with top-rated experts across various domains</p>
-      </div>
+        .header-logo {
+            display: flex;
+            align-items: center;
+        }
 
-      {/* Search & Filters */}
-      <div className="p-4 bg-white">
-        <div className="flex items-center bg-gray-100 rounded-lg p-2 mb-3">
-          <Search className="text-gray-500 mr-2" />
-          <input 
-            type="text" 
-            placeholder="Search skills" 
-            className="w-full bg-transparent"
-            onChange={(e) => setFilters({...filters, skillType: e.target.value})}
-          />
-        </div>
+        .header-logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
 
-        <div className="flex space-x-2">
-          <div className="flex-1">
-            <select 
-              className="w-full bg-gray-100 p-2 rounded-lg"
-              onChange={(e) => setFilters({...filters, location: e.target.value})}
-            >
-              <option>Location</option>
-              <option>San Francisco</option>
-              <option>New York</option>
-            </select>
-          </div>
-          <div className="flex-1">
-            <select 
-              className="w-full bg-gray-100 p-2 rounded-lg"
-              onChange={(e) => setFilters({...filters, minRating: parseFloat(e.target.value)})}
-            >
-              <option value={0}>Ratings</option>
-              <option value={4}>4+ Stars</option>
-              <option value={4.5}>4.5+ Stars</option>
-            </select>
-          </div>
-        </div>
-      </div>
+        .header-actions i {
+            margin-left: 15px;
+            cursor: pointer;
+        }
 
-      {/* Professional Listings */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {filteredProfessionals.map(pro => (
-          <div 
-            key={pro.id} 
-            className="bg-white rounded-lg shadow-md p-4"
-          >
-            <div className="flex justify-between items-center mb-3">
-              <div className="flex items-center">
-                <img 
-                  src="/api/placeholder/40/40" 
-                  alt={pro.name} 
-                  className="w-10 h-10 rounded-full mr-3"
-                />
-                <div>
-                  <h3 className="font-bold">{pro.name}</h3>
-                  <p className="text-sm text-gray-500">{pro.profession}</p>
-                </div>
-              </div>
-              <div className="flex items-center text-yellow-500">
-                <Star className="mr-1" size={16} /> {pro.rating}
-              </div>
+        .banner {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .search-filters {
+            padding: 20px;
+            background-color: white;
+        }
+
+        .search-input {
+            display: flex;
+            align-items: center;
+            background-color: var(--background-light);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        .search-input input {
+            flex-grow: 1;
+            border: none;
+            background: transparent;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-row select {
+            flex-grow: 1;
+            padding: 10px;
+            background-color: var(--background-light);
+            border: none;
+            border-radius: 8px;
+        }
+
+        .professional-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .professional-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .professional-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .professional-profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .skills-tag {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .skill-badge {
+            background-color: #dbeafe;
+            color: #1e40af;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+        }
+
+        .professional-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contact-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-logo">
+                <img src="https://via.placeholder.com/50" alt="ProConnect Logo">
+                <h1>ProConnect</h1>
             </div>
-
-            <div className="mb-3">
-              <div className="flex flex-wrap gap-2">
-                {pro.skills.map(skill => (
-                  <span 
-                    key={skill} 
-                    className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
+            <div class="header-actions">
+                <i class="fas fa-bell"></i>
+                <i class="fas fa-cog"></i>
             </div>
+        </div>
 
-            <div className="flex justify-between items-center">
-              <div>
-                <p className="font-bold text-green-600">${pro.hourlyRate}/hr</p>
-                <p className="text-gray-500 text-sm">Available: {pro.availability}</p>
-              </div>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center">
-                <MessageCircle className="mr-2" size={16} /> Contact
-              </button>
+        <div class="banner">
+            <h2>Find Your Perfect Professional</h2>
+            <p>Connect with top-rated experts across various domains</p>
+        </div>
+
+        <div class="search-filters">
+            <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search skills">
             </div>
-          </div>
-        ))}
-      </div>
+            <div class="filter-row">
+                <select>
+                    <option>Location</option>
+                    <option>San Francisco</option>
+                    <option>New York</option>
+                </select>
+                <select>
+                    <option>Ratings</option>
+                    <option>4+ Stars</option>
+                    <option>4.5+ Stars</option>
+                </select>
+            </div>
+        </div>
 
-      {/* Bottom Navigation */}
-      <footer className="bg-white border-t border-gray-200 p-3 flex justify-around">
-        <button className="flex flex-col items-center text-blue-600">
-          <Home />
-          <span className="text-xs mt-1">Home</span>
-        </button>
-        <button className="flex flex-col items-center text-gray-500">
-          <Search />
-          <span className="text-xs mt-1">Search</span>
-        </button>
-        <button className="flex flex-col items-center text-gray-500">
-          <MessageCircle />
-          <span className="text-xs mt-1">Messages</span>
-        </button>
-        <button className="flex flex-col items-center text-gray-500">
-          <User />
-          <span className="text-xs mt-1">Profile</span>
-        </button>
-      </footer>
+        <div id="professionals-list">
+            <!-- Professionals will be dynamically inserted here -->
+        </div>
     </div>
-  );
-};
 
-export default ProfessionalMarketplaceApp;
+    <script>
+        const professionals = [
+            {
+                name: "Sarah Martinez",
+                profession: "Graphic Designer",
+                skills: ["Branding", "UI/UX", "Adobe Creative Suite"],
+                rating: 4.9,
+                hourlyRate: 75,
+                availability: "Flexible"
+            },
+            {
+                name: "Alex Chen",
+                profession: "Web Developer", 
+                skills: ["React", "Node.js", "Full Stack Development"],
+                rating: 4.7,
+                hourlyRate: 95,
+                availability: "Part-time"
+            }
+        ];
+
+        function renderProfessionals() {
+            const list = document.getElementById('professionals-list');
+            list.innerHTML = professionals.map(pro => `
+                <div class="professional-card">
+                    <div class="professional-header">
+                        <div class="professional-profile">
+                            <img src="https://via.placeholder.com/50" alt="${pro.name}">
+                            <div>
+                                <h3>${pro.name}</h3>
+                                <p>${pro.profession}</p>
+                            </div>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star" style="color: gold;"></i> ${pro.rating}
+                        </div>
+                    </div>
+
+                    <div class="skills-tag">
+                        ${pro.skills.map(skill => 
+                            `<span class="skill-badge">${skill}</span>`
+                        ).join('')}
+                    </div>
+
+                    <div class="professional-actions">
+                        <div>
+                            <p><strong>$${pro.hourlyRate}/hr</strong></p>
+                            <small>Available: ${pro.availability}</small>
+                        </div>
+                        <button class="contact-btn">
+                            <i class="fas fa-comment-dots"></i> Contact
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        renderProfessionals();
+    </script>
+</body>
+</html>
